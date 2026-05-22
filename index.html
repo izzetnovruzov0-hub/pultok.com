@@ -100,7 +100,7 @@
         
         .wallet button { background: #10b981; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        /* GİRİŞ PANELİ */
+        /* GİRİŞ PANELİ DIZAYNI */
         .login {
             position: absolute;
             inset: 0;
@@ -153,36 +153,21 @@
         .admin-card h5 { font-size: 11px; color: #a1a1aa; margin-bottom: 2px; }
         .admin-card p { font-size: 16px; font-weight: bold; color: #22d3ee; }
         .request-item { background: #111; border: 1px solid #222; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-
-        .secure-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 1000; align-items: center; justify-content: center; padding: 20px; text-align: center; }
-        .secure-content { background: #111; border: 2px solid #ef4444; padding: 25px; border-radius: 16px; max-width: 380px; }
     </style>
 </head>
 
 <body>
 
-    <div id="securityAlert" class="secure-modal">
-        <div class="secure-content">
-            <span style="font-size: 40px;">⚠️</span>
-            <h3 style="color: #ef4444; margin-top: 10px;">Sayt Mühafizəsi Aktivdir</h3>
-            <p style="font-size: 13px; color: #a1a1aa; margin-top: 8px; line-height: 1.5;">
-                Şübhəli hərəkət və ya icazəsiz koda baxış (F12) cəhdi bloklandı.
-            </p>
-            <button class="loginbtn" style="background: #ef4444; color: white; width: 100%;" onclick="location.reload()">Yenidən Yoxla</button>
-        </div>
-    </div>
-
     <div class="container">
         
-        <!-- REAL GİRİŞ/QEYDİYYAT PANELİ -->
+        <!-- GİRİŞ SƏHİFƏSİ -->
         <div class="login" id="loginPage">
             <h1>PULTOK</h1>
             <div class="auth-subtitle" id="auth-title">Sistemə Giriş Edin</div>
 
-            <input type="text" id="auth-username" placeholder="İstifadəçi adı yazın...">
-            <input type="password" id="auth-password" placeholder="Şifrə yazın...">
+            <input type="text" id="auth-username" placeholder="İstifadəçi adı...">
+            <input type="password" id="auth-password" placeholder="Şifrə...">
 
-            <!-- DÜZƏLİŞ: Giriş düyməsinə birbaşa klik funksiyası bağlandı (Xətanı keçmək üçün) -->
             <button class="loginbtn" id="auth-submit-btn" onclick="handleAuth()">
                 Giriş Et
             </button>
@@ -192,7 +177,7 @@
             </div>
         </div>
 
-        <!-- ƏSAS UYGULAMA SAHƏSİ -->
+        <!-- VİDEO VƏ BALANS PANELİ (ƏSAS UYGULAMA) -->
         <div id="app" style="display:none; width:100%; height:100%;">
             
             <div class="adsense-banner">
@@ -230,7 +215,7 @@
             <div class="page-title">İstifadəçi Profili</div>
             <div class="profile-header">
                 <div class="profile-avatar">👤</div>
-                <div id="profile-display-username" style="font-weight: bold; font-size: 16px;">@pultok_user</div>
+                <div id="profile-display-username" style="font-weight: bold; font-size: 16px;">@user</div>
             </div>
             <div class="stats-row">
                 <div class="stat-box"><b>12</b><span>Videolar</span></div>
@@ -238,3 +223,17 @@
             </div>
 
             <div class="youtube-ad-box">
+                <iframe width="100%" height="100%" src="https://youtube.com" title="YouTube player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div style="font-size: 10px; color: #555; text-align: center; margin-top: 12px; line-height: 1.3;">
+                <b>Məxfilik Siyasəti:</b> Pultok daxili məlumatları qoruyur.
+            </div>
+
+            <button class="loginbtn" style="background: #222; color: white;" onclick="navigateTo('admin')">⚙️ Admin Paneli</button>
+            <button class="loginbtn" style="background: #333; color: white;" onclick="closeSubPage()">⬅️ Geriyə Qayıt</button>
+            <button class="loginbtn" style="background: #ef4444; color: white;" onclick="handleLogout()">🚪 Çıxış Et</button>
+        </div>
+
+        <!-- ADMİN PANELİ -->
+        <div id="sub-admin" class="sub-page">
+            <div class="page-title">Admin İdarəetmə</div>
