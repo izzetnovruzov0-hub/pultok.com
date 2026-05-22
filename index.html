@@ -5,232 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Pultok - Video Paylaş və Qazan</title>
     <style>
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            -webkit-user-select: none; 
-            -moz-user-select: none; 
-            -ms-user-select: none; 
-            user-select: none; 
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { margin: 0; background: #000; color: #fff; font-family: Arial, sans-serif; display: flex; justify-content: center; min-height: 100vh; }
+        .container { width: 100%; max-width: 450px; margin: auto; height: 100vh; position: relative; overflow: hidden; border-left: 1px solid #1f2937; border-right: 1px solid #1f2937; }
         
-        body {
-            margin: 0;
-            background: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 450px;
-            margin: auto;
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-            border-left: 1px solid #1f2937;
-            border-right: 1px solid #1f2937;
-        }
-
-        .adsense-banner { background: #111; border: 1px dashed #eab308; padding: 8px; margin: 10px; border-radius: 12px; text-align: center; min-height: 50px; z-index: 50; position: absolute; top: 0; left: 0; right: 0; }
-        .ads-label { font-size: 8px; color: #eab308; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 2px; }
-        .youtube-ad-box { width: 100%; height: 140px; background: #111; border-radius: 12px; overflow: hidden; margin-top: 15px; border: 1px solid #ef4444; }
-
-        video {
-            width: 100%;
-            height: 100vh;
-            object-fit: cover;
-        }
-
-        .sidebar {
-            position: absolute;
-            right: 15px;
-            bottom: 140px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            z-index: 30;
-        }
-
-        /* Düymə ID-ləri və sinifləri digər səhifələrlə qarışmaması üçün tamamilə unikal edildi */
-        .action-click-btn {
-            background: rgba(0,0,0,.6);
-            color: #fff;
-            border: 1px solid #333;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-        }
-
-        .info {
-            position: absolute;
-            bottom: 120px;
-            left: 15px;
-            z-index: 30;
-            text-shadow: 1px 1px 4px #000;
-        }
-        .info h3 { color: #22d3ee; margin-bottom: 4px; }
-
-        .wallet {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            right: 15px;
-            background: rgba(17, 17, 17, 0.95);
-            padding: 15px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 30;
-            border: 1px solid #222;
-            backdrop-filter: blur(8px);
-        }
+        /* GİRİŞ SƏHİFƏSİ PANELİ */
+        .login-screen { position: absolute; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; padding: 30px; z-index: 100; }
+        .login-screen h1 { text-align: center; color: #22d3ee; margin-bottom: 5px; font-weight: 900; font-size: 32px; letter-spacing: 1px; }
+        .auth-subtitle { text-align: center; color: #a1a1aa; font-size: 13px; margin-bottom: 25px; }
         
-        .wallet button { background: #10b981; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-        .login {
-            position: absolute;
-            inset: 0;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 30px;
-            z-index: 100;
-        }
-        .login h1 { text-align: center; color: #22d3ee; margin-bottom: 5px; font-weight: 900; letter-spacing: 1px; }
-        .auth-subtitle { text-align: center; color: #a1a1aa; font-size: 13px; margin-bottom: 20px; }
+        .input-box { width: 100%; padding: 14px; margin: 10px 0; background: #111; border: 1px solid #222; color: white; border-radius: 8px; outline: none; }
+        .input-box:focus { border-color: #22d3ee; }
         
-        input {
-            padding: 14px;
-            margin: 10px 0;
-            background: #111;
-            border: 1px solid #222;
-            color: white;
-            border-radius: 8px;
-            outline: none;
-            -webkit-user-select: text;
-            user-select: text;
-        }
-        input:focus { border-color: #22d3ee; }
+        .primary-action-btn { width: 100%; padding: 15px; background: #22d3ee; border: none; color: black; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; font-size: 15px; text-transform: uppercase; }
+        .auth-toggle-link { text-align: center; margin-top: 22px; font-size: 13px; color: #a1a1aa; }
+        .auth-toggle-link span { color: #22d3ee; cursor: pointer; font-weight: bold; }
 
-        .auth-main-submit-trigger {
-            padding: 14px;
-            background: #22d3ee;
-            border: none;
-            color: black;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-            width: 100%;
-            text-align: center;
-        }
-        .auth-toggle { text-align: center; margin-top: 20px; font-size: 13px; color: #a1a1aa; }
-        .auth-toggle span { color: #22d3ee; cursor: pointer; font-weight: bold; }
-
-        .sub-page { position: absolute; inset: 0; background: #000; z-index: 80; display: none; padding: 20px; flex-direction: column; overflow-y: auto; }
-        .sub-page.active { display: flex; }
-        .page-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; color: #22d3ee; }
-        .profile-header { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
-        .profile-avatar { width: 70px; height: 70px; background: #222; border-radius: 50%; border: 2px solid #22d3ee; display: flex; align-items: center; justify-content: center; font-size: 30px; }
-        .stats-row { display: flex; justify-content: center; gap: 35px; margin-bottom: 20px; text-align: center; }
-        .stat-box span { display: block; font-size: 11px; color: #a1a1aa; }
+        /* VİDEO ƏSAS APPLİKASİYA SAHƏSİ */
+        .main-app-screen { width: 100%; height: 100%; display: none; position: relative; }
+        video { width: 100%; height: 100vh; object-fit: cover; }
         
-        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .admin-card { background: #111; border: 1px solid #222; padding: 12px; border-radius: 10px; text-align: center; }
-        .admin-card h5 { font-size: 11px; color: #a1a1aa; margin-bottom: 2px; }
-        .admin-card p { font-size: 16px; font-weight: bold; color: #22d3ee; }
-        .request-item { background: #111; border: 1px solid #222; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+        .sidebar-menu { position: absolute; right: 15px; bottom: 140px; display: flex; flex-direction: column; gap: 20px; z-index: 30; }
+        .circle-nav-btn { background: rgba(0,0,0,.6); color: #fff; border: 1px solid #333; border-radius: 50%; width: 52px; height: 52px; font-size: 20px; cursor: pointer; backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; }
+        
+        .video-info-box { position: absolute; bottom: 120px; left: 15px; z-index: 30; text-shadow: 1px 1px 4px #000; }
+        .video-info-box h3 { color: #22d3ee; margin-bottom: 4px; font-size: 16px; }
+        .video-info-box p { font-size: 13px; color: #e5e7eb; }
+
+        .wallet-card-bar { position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(17, 17, 17, 0.95); padding: 15px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; z-index: 30; border: 1px solid #222; backdrop-filter: blur(8px); }
+        .wallet-card-bar button { background: #10b981; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px; }
+
+        /* DIZAYN SUB-SƏHİFƏLƏR */
+        .modal-sub-page { position: absolute; inset: 0; background: #000; z-index: 80; display: none; padding: 20px; flex-direction: column; overflow-y: auto; }
+        .modal-sub-page.active-view { display: flex; }
+        .view-header-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; color: #22d3ee; }
+        
+        .profile-header-ui { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .profile-avatar-ui { width: 70px; height: 70px; background: #222; border-radius: 50%; border: 2px solid #22d3ee; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+        .profile-stats-ui { display: flex; justify-content: center; gap: 35px; margin-bottom: 20px; text-align: center; }
+        .profile-stats-ui span { display: block; font-size: 11px; color: #a1a1aa; }
+        
+        .youtube-banner-frame { width: 100%; height: 140px; background: #111; border-radius: 12px; overflow: hidden; margin-top: 15px; border: 1px solid #ef4444; }
+        
+        .admin-dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .admin-stat-card { background: #111; border: 1px solid #222; padding: 12px; border-radius: 10px; text-align: center; }
+        .admin-stat-card h5 { font-size: 11px; color: #a1a1aa; margin-bottom: 2px; }
+        .admin-stat-card p { font-size: 16px; font-weight: bold; color: #22d3ee; }
+        .payout-request-item { background: #111; border: 1px solid #222; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
     </style>
 </head>
-
 <body>
 
     <div class="container">
         
-        <!-- LOGİN / QEYDİYYAT PANELİ -->
-        <div class="login" id="loginPage">
+        <!-- GİRİŞ EKRANI -->
+        <div class="login-screen" id="loginView">
             <h1>PULTOK</h1>
-            <div class="auth-subtitle" id="auth-title">Sistemə Giriş Edin</div>
+            <div class="auth-subtitle" id="authScreenSubtitle">Sistemə Giriş Edin</div>
 
-            <input type="text" id="auth-username" placeholder="İstifadəçi adı yazın...">
-            <input type="password" id="auth-password" placeholder="Şifrə yazın...">
+            <input type="text" id="userInputField" class="input-box" placeholder="İstifadəçi adı...">
+            <input type="password" id="passwordInputField" class="input-box" placeholder="Şifrə...">
 
-            <button class="auth-main-submit-trigger" id="auth-submit-btn" onclick="executeAuthAction()">
-                Giriş Et
+            <button class="primary-action-btn" onclick="processAuthSubmission()">
+                Giriş və ya Qeydiyyat
             </button>
             
-            <div class="auth-toggle" id="auth-toggle-text">
-                Hesabınız yoxdur? <span onclick="switchToRegisterMode(true)">Qeydiyyatdan keç</span>
+            <div class="auth-toggle-link" id="authModeToggleText">
+                Hesabınız yoxdur? <span onclick="switchAuthInterface(true)">Qeydiyyatdan keç</span>
             </div>
         </div>
 
-        <!-- ƏSAS VİDEO REALS SAHƏSİ -->
-        <div id="app" style="display:none; width:100%; height:100%;">
-            
-            <div class="adsense-banner">
-                <span class="ads-label">Google Adsense Reklam Sahəsi</span>
-            </div>
-
-            <video id="video" loop muted playsinline onclick="togglePlayState()">
+        <!-- VİDEO VƏ PANEL EKRANI -->
+        <div class="main-app-screen" id="mainAppView">
+            <video id="pultokVideoPlayer" loop muted playsinline onclick="controlVideoPlayback()">
                 <source src="https://mixkit.co" type="video/mp4">
             </video>
 
-            <div class="sidebar">
-                <button class="action-click-btn" id="likeBtn" onclick="triggerLikeAction()">🤍</button>
-                <button class="action-click-btn" onclick="navigateToSubPage('profile')">👤</button>
-                <button class="action-click-btn" onclick="copyShareLink()">🔁</button>
+            <div class="sidebar-menu">
+                <button class="circle-nav-btn" id="likeActionButton" onclick="handleLikeTrigger()">🤍</button>
+                <button class="circle-nav-btn" onclick="openSubSection('profile')">👤</button>
+                <button class="circle-nav-btn" onclick="executeLinkCopy()">🔁</button>
             </div>
 
-            <div class="info">
+            <div class="video-info-box">
                 <h3>@pultok_official</h3>
                 <p>Video paylaş və qazan! 🚀 #pultok</p>
             </div>
 
-            <div class="wallet">
+            <div class="wallet-card-bar">
                 <div>
                     <small style="color: #a1a1aa; font-size: 11px;">Sizin Balansınız</small>
-                    <h2 id="balance" style="color: #34d399;">0.00 ₼</h2>
+                    <h2 id="balanceDisplayValue" style="color: #34d399;">0.00 ₼</h2>
                 </div>
-                <button onclick="requestWithdrawal()">Çıxar</button>
+                <button onclick="triggerCashoutRequest()">Çıxar</button>
             </div>
         </div>
 
-        <!-- PROFİL -->
-        <div id="sub-profile" class="sub-page">
-            <div class="page-title">İstifadəçi Profili</div>
-            <div class="profile-header">
-                <div class="profile-avatar">👤</div>
-                <div id="profile-display-username" style="font-weight: bold; font-size: 16px;">@user</div>
+        <!-- PROFİL SƏHİFƏSİ -->
+        <div id="subView-profile" class="modal-sub-page">
+            <div class="view-header-title">İstifadəçi Profili</div>
+            <div class="profile-header-ui">
+                <div class="profile-avatar-ui">👤</div>
+                <div id="profileUsernameLabel" style="font-weight: bold; font-size: 16px;">@user</div>
             </div>
-            <div class="stats-row">
+            <div class="profile-stats-ui">
                 <div class="stat-box"><b>12</b><span>Videolar</span></div>
-                <div class="stat-box"><b id="profileLikes">1,240</b><span>Bəyənmə</span></div>
+                <div class="stat-box"><b id="totalLikesCountLabel">1,240</b><span>Bəyənmə</span></div>
             </div>
 
-            <span class="ads-label" style="text-align: center; display: block; margin-bottom: 5px;">Sponsorlu YouTube Videosu</span>
-            <div class="youtube-ad-box">
+            <span style="font-size: 8px; color: #eab308; text-transform: uppercase; font-weight: bold; text-align: center; display: block; margin-bottom: 5px;">Sponsorlu YouTube Videosu</span>
+            <div class="youtube-banner-frame">
                 <iframe width="100%" height="100%" src="https://youtube.com" title="YouTube player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
 
-            <button class="auth-main-submit-trigger" style="background: #222; color: white;" onclick="navigateToSubPage('admin')">⚙️ Admin Paneli</button>
-            <button class="auth-main-submit-trigger" style="background: #333; color: white;" onclick="closeActiveSubPage()">⬅️ Geriyə Qayıt</button>
-            <button class="auth-main-submit-trigger" style="background: #ef4444; color: white;" onclick="triggerLogoutProcess()">🚪 Çıxış Et</button>
+            <button class="primary-action-btn" style="background: #222; color: white;" onclick="openSubSection('admin')">⚙️ Admin Paneli</button>
+            <button class="primary-action-btn" style="background: #333; color: white;" onclick="returnToMainFeed()">⬅️ Səhifəyə Qayıt</button>
+            <button class="primary-action-btn" style="background: #ef4444; color: white;" onclick="logoutSessionAction()">🚪 Çıxış Et</button>
         </div>
 
         <!-- ADMİN PANELİ -->
-        <div id="sub-admin" class="sub-page">
-            <div class="page-title">Admin İdarəetmə</div>
-            <div class="admin-grid">
-                <div class="admin-card"><h5>Toplam İstifadəçi</h5><p id="admin-total-users">1</p></div>
-                <div class="admin-card"><h5>Gözləyən Çıxarış</h5><p id="pendingRequestsCount">0</p></div>
+        <div id="subView-admin" class="modal-sub-page">
+            <div class="view-header-title">Admin İdarəetmə</div>
+            <div class="admin-dashboard-grid">
+                <div class="admin-stat-card"><h5>Toplam İstifadəçi</h5><p>1,420</p></div>
+                <div class="admin-stat-card"><h5>Gözləyən Çıxarış</h5><p id="adminPendingCount">0</p></div>
             </div>
+            <div class="view-header-title" style="font-size: 14px; text-align: left; margin-bottom: 10px;">Çıxarış Sorğuları</div>
+            <div id="adminRequestListContainer" style="flex: 1;">
+                <p id="emptyRequestsNotice" style="font-size: 12px; color: #555; text-align: center; margin-top: 10px;">Aktiv sorğu yoxdur.</p>
+            </div>
+            <button class="primary-action-btn" style="background: #333; color: white;" onclick="openSubSection('profile')">⬅️ Profilə Keç</button>
+        </div>
+    </div>
+
+    <script>
+        // SİZİN TELEFONDA KEŞ KİLİDİNİ QIRMAQ ÜÇÜN 100% YENİLƏNMİŞ TAM KİLİDSİZ SİSTEM
+        let uiRegisterState = false;
+        let isVideoLiked = false;
+        let internalUserBalance = 0.00;
+        let authenticatedUser = "istifadəçi";
+
+        function switchAuthInterface(toRegister) {
+            uiRegisterState = toRegister;
+            document.getElementById('authScreenSubtitle').innerText = toRegister ? "Yeni Hesab Yarat" : "Sistemə Giriş Edin";
