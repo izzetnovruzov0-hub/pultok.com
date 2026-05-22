@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Pultok - Video Paylaş və Qazan</title>
+    
+    <!-- GOOGLE ADSENSE REKLAM STRUKTURU -->
+    <script async src="https://googlesyndication.com" crossorigin="anonymous"></script>
+
+    <style>
+        /* SITE QORUYUCU: Mətn seçimi, sağ klik və kopyalama tamamilə qadağan edilir */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-user-select: none; 
+            -moz-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none; 
+        }
+        
+        body {
+            margin: 0;
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            margin: auto;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            border-left: 1px solid #1f2937;
+            border-right: 1px solid #1f2937;
+        }
+
+        /* REKLAM BANNER STİLLƏRİ */
+        .adsense-banner { background: #111; border: 1px dashed #eab308; padding: 8px; margin: 10px; border-radius: 12px; text-align: center; min-height: 50px; z-index: 50; position: absolute; top: 0; left: 0; right: 0; }
+        .ads-label { font-size: 8px; color: #eab308; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 2px; }
+        .youtube-ad-box { width: 100%; height: 140px; background: #111; border-radius: 12px; overflow: hidden; margin-top: 15px; border: 1px solid #ef4444; }
+
+        video {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+        }
+
+        .sidebar {
+            position: absolute;
+            right: 15px;
+            bottom: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 30;
+        }
+
+        .btn {
+            background: rgba(0,0,0,.6);
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+
+        .info {
+            position: absolute;
+            bottom: 120px;
+            left: 15px;
+            z-index: 30;
+            text-shadow: 1px 1px 4px #000;
+        }
+        .info h3 { color: #22d3ee; margin-bottom: 4px; }
+
+        .wallet {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            background: rgba(17, 17, 17, 0.95);
+            padding: 15px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 30;
+            border: 1px solid #222;
+            backdrop-filter: blur(8px);
+        }
+        
+        .wallet button { background: #10b981; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        /* GİRİŞ VƏ QEYDİYYAT PANELİ */
+        .login {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 30px;
+            z-index: 100;
+        }
+        .login h1 { text-align: center; color: #22d3ee; margin-bottom: 5px; font-weight: 900; letter-spacing: 1px; }
+        .auth-subtitle { text-align: center; color: #a1a1aa; font-size: 13px; margin-bottom: 20px; }
+        
+        input {
+            padding: 14px;
+            margin: 10px 0;
+            background: #111;
+            border: 1px solid #222;
+            color: white;
+            border-radius: 8px;
+            outline: none;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        input:focus { border-color: #22d3ee; }
+
+        button.loginbtn {
+            padding: 14px;
+            background: #22d3ee;
+            border: none;
+            color: black;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .auth-toggle { text-align: center; margin-top: 20px; font-size: 13px; color: #a1a1aa; }
+        .auth-toggle span { color: #22d3ee; cursor: pointer; font-weight: bold; }
+
+        /* SUB-PAGES: PROFİL VƏ ADMİN */
+        .sub-page { position: absolute; inset: 0; background: #000; z-index: 80; display: none; padding: 20px; flex-direction: column; overflow-y: auto; }
+        .sub-page.active { display: flex; }
+        .page-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; color: #22d3ee; }
+        .profile-header { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .profile-avatar { width: 70px; height: 70px; background: #222; border-radius: 50%; border: 2px solid #22d3ee; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+        .stats-row { display: flex; justify-content: center; gap: 35px; margin-bottom: 20px; text-align: center; }
+        .stat-box span { display: block; font-size: 11px; color: #a1a1aa; }
+        
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .admin-card { background: #111; border: 1px solid #222; padding: 12px; border-radius: 10px; text-align: center; }
+        .admin-card h5 { font-size: 11px; color: #a1a1aa; margin-bottom: 2px; }
+        .admin-card p { font-size: 16px; font-weight: bold; color: #22d3ee; }
+        .request-item { background: #111; border: 1px solid #222; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+
+        /* MULTI-FUNCTION SECURE MODAL */
+        .secure-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 1000; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        .secure-content { background: #111; border: 2px solid #ef4444; padding: 25px; border-radius: 16px; max-width: 380px; }
+    </style>
+</head>
+
+<body>
+
+    <!-- SİTE QORUYUCU REJİM PANELİ -->
+    <div id="securityAlert" class="secure-modal">
+        <div class="secure-content">
+            <span style="font-size: 40px;">⚠️</span>
+            <h3 style="color: #ef4444; margin-top: 10px;">Sayt Mühafizəsi Aktivdir</h3>
+            <p style="font-size: 13px; color: #a1a1aa; margin-top: 8px; line-height: 1.5;">
+                Şübhəli hərəkət, avtomatik bot və ya icazəsiz koda baxış (F12) cəhdi bloklandı.
+            </p>
+            <button class="loginbtn" style="background: #ef4444; color: white; width: 100%;" onclick="location.reload()">Yenidən Yoxla</button>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <!-- 0. SƏHİFƏ: REAL GİRİŞ/QEYDİYYAT PANELİ -->
+        <div class="login" id="loginPage">
+            <h1>PULTOK</h1>
+            <div class="auth-subtitle" id="auth-title">Sistemə Giriş Edin</div>
+
+            <input type="text" id="auth-username" placeholder="İstifadəçi adı">
+            <input type="password" id="auth-password" placeholder="Şifrə (Min. 6 simvol)">
+
+            <button class="loginbtn" id="auth-submit-btn" onclick="handleAuth()">
+                Giriş
+            </button>
+            
+            <div class="auth-toggle" id="auth-toggle-text">
+                Hesabınız yoxdur? <span onclick="toggleAuthMode(true)">Qeydiyyatdan keç</span>
+            </div>
+        </div>
+
+        <!-- 1. SƏHİFƏ: ƏSAS TIKTOK REALS AKSIYASI -->
+        <div id="app" style="display:none; width:100%; height:100%;">
+            
+            <!-- ADSENSE REKLAM YERİ -->
+            <div class="adsense-banner">
+                <span class="ads-label">Google Adsense Reklamı</span>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0000000000000000" data-ad-slot="0000000000" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+            </div>
+
+            <!-- İşlək Real Video Linki -->
+            <video id="video" loop muted playsinline onclick="togglePlay()">
+                <source src="https://mixkit.co" type="video/mp4">
+            </video>
+
+            <div class="sidebar">
+                <button class="btn" id="likeBtn" onclick="like()">🤍</button>
+                <button class="btn" onclick="navigateTo('profile')">👤</button>
+                <button class="btn" onclick="shareLink()">🔁</button>
+            </div>
+
+            <div class="info">
+                <h3>@pultok_official</h3>
+                <p>Video paylaş və qazan! 🚀 #pultok</p>
+            </div>
+
+            <div class="wallet">
+                <div>
+                    <small style="color: #a1a1aa; font-size: 11px;">Sizin Balansınız</small>
+                    <h2 id="balance" style="color: #34d399;">0.00 ₼</h2>
+                </div>
+                <button onclick="withdraw()">Çıxar</button>
+            </div>
+        </div>
+
+        <!-- 2. SƏHİFƏ: PROFİL SƏHİFƏSİ -->
+        <div id="sub-profile" class="sub-page">
+            <div class="page-title">İstifadəçi Profili</div>
+            <div class="profile-header">
+                <div class="profile-avatar">👤</div>
+                <div id="profile-display-username" style="font-weight: bold; font-size: 16px;">@user</div>
+            </div>
+            <div class="stats-row">
