@@ -4,12 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Pultok - Video Paylaş və Qazan</title>
-    
-    <!-- GOOGLE ADSENSE -->
-    <script async src="https://googlesyndication.com" crossorigin="anonymous"></script>
-
     <style>
-        /* SITE QORUYUCU: Mətn seçimi, sağ klik və kopyalama tamamilə qadağan edilir */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -61,7 +56,8 @@
             z-index: 30;
         }
 
-        .btn {
+        /* Düymə ID-ləri və sinifləri digər səhifələrlə qarışmaması üçün tamamilə unikal edildi */
+        .action-click-btn {
             background: rgba(0,0,0,.6);
             color: #fff;
             border: 1px solid #333;
@@ -100,7 +96,6 @@
         
         .wallet button { background: #10b981; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        /* GİRİŞ PANELİ DIZAYNI */
         .login {
             position: absolute;
             inset: 0;
@@ -127,7 +122,7 @@
         }
         input:focus { border-color: #22d3ee; }
 
-        button.loginbtn {
+        .auth-main-submit-trigger {
             padding: 14px;
             background: #22d3ee;
             border: none;
@@ -136,6 +131,8 @@
             border-radius: 8px;
             cursor: pointer;
             margin-top: 10px;
+            width: 100%;
+            text-align: center;
         }
         .auth-toggle { text-align: center; margin-top: 20px; font-size: 13px; color: #a1a1aa; }
         .auth-toggle span { color: #22d3ee; cursor: pointer; font-weight: bold; }
@@ -160,40 +157,38 @@
 
     <div class="container">
         
-        <!-- GİRİŞ SƏHİFƏSİ -->
+        <!-- LOGİN / QEYDİYYAT PANELİ -->
         <div class="login" id="loginPage">
             <h1>PULTOK</h1>
             <div class="auth-subtitle" id="auth-title">Sistemə Giriş Edin</div>
 
-            <input type="text" id="auth-username" placeholder="İstifadəçi adı...">
-            <input type="password" id="auth-password" placeholder="Şifrə...">
+            <input type="text" id="auth-username" placeholder="İstifadəçi adı yazın...">
+            <input type="password" id="auth-password" placeholder="Şifrə yazın...">
 
-            <button class="loginbtn" id="auth-submit-btn" onclick="handleAuth()">
+            <button class="auth-main-submit-trigger" id="auth-submit-btn" onclick="executeAuthAction()">
                 Giriş Et
             </button>
             
             <div class="auth-toggle" id="auth-toggle-text">
-                Hesabınız yoxdur? <span onclick="toggleAuthMode(true)">Qeydiyyatdan keç</span>
+                Hesabınız yoxdur? <span onclick="switchToRegisterMode(true)">Qeydiyyatdan keç</span>
             </div>
         </div>
 
-        <!-- VİDEO VƏ BALANS PANELİ (ƏSAS UYGULAMA) -->
+        <!-- ƏSAS VİDEO REALS SAHƏSİ -->
         <div id="app" style="display:none; width:100%; height:100%;">
             
             <div class="adsense-banner">
-                <span class="ads-label">Google Adsense Reklamı</span>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0000000000000000" data-ad-slot="0000000000" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+                <span class="ads-label">Google Adsense Reklam Sahəsi</span>
             </div>
 
-            <video id="video" loop muted playsinline onclick="togglePlay()">
+            <video id="video" loop muted playsinline onclick="togglePlayState()">
                 <source src="https://mixkit.co" type="video/mp4">
             </video>
 
             <div class="sidebar">
-                <button class="btn" id="likeBtn" onclick="like()">🤍</button>
-                <button class="btn" onclick="navigateTo('profile')">👤</button>
-                <button class="btn" onclick="shareLink()">🔁</button>
+                <button class="action-click-btn" id="likeBtn" onclick="triggerLikeAction()">🤍</button>
+                <button class="action-click-btn" onclick="navigateToSubPage('profile')">👤</button>
+                <button class="action-click-btn" onclick="copyShareLink()">🔁</button>
             </div>
 
             <div class="info">
@@ -206,7 +201,7 @@
                     <small style="color: #a1a1aa; font-size: 11px;">Sizin Balansınız</small>
                     <h2 id="balance" style="color: #34d399;">0.00 ₼</h2>
                 </div>
-                <button onclick="withdraw()">Çıxar</button>
+                <button onclick="requestWithdrawal()">Çıxar</button>
             </div>
         </div>
 
@@ -222,18 +217,20 @@
                 <div class="stat-box"><b id="profileLikes">1,240</b><span>Bəyənmə</span></div>
             </div>
 
+            <span class="ads-label" style="text-align: center; display: block; margin-bottom: 5px;">Sponsorlu YouTube Videosu</span>
             <div class="youtube-ad-box">
                 <iframe width="100%" height="100%" src="https://youtube.com" title="YouTube player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div style="font-size: 10px; color: #555; text-align: center; margin-top: 12px; line-height: 1.3;">
-                <b>Məxfilik Siyasəti:</b> Pultok daxili məlumatları qoruyur.
-            </div>
 
-            <button class="loginbtn" style="background: #222; color: white;" onclick="navigateTo('admin')">⚙️ Admin Paneli</button>
-            <button class="loginbtn" style="background: #333; color: white;" onclick="closeSubPage()">⬅️ Geriyə Qayıt</button>
-            <button class="loginbtn" style="background: #ef4444; color: white;" onclick="handleLogout()">🚪 Çıxış Et</button>
+            <button class="auth-main-submit-trigger" style="background: #222; color: white;" onclick="navigateToSubPage('admin')">⚙️ Admin Paneli</button>
+            <button class="auth-main-submit-trigger" style="background: #333; color: white;" onclick="closeActiveSubPage()">⬅️ Geriyə Qayıt</button>
+            <button class="auth-main-submit-trigger" style="background: #ef4444; color: white;" onclick="triggerLogoutProcess()">🚪 Çıxış Et</button>
         </div>
 
         <!-- ADMİN PANELİ -->
         <div id="sub-admin" class="sub-page">
             <div class="page-title">Admin İdarəetmə</div>
+            <div class="admin-grid">
+                <div class="admin-card"><h5>Toplam İstifadəçi</h5><p id="admin-total-users">1</p></div>
+                <div class="admin-card"><h5>Gözləyən Çıxarış</h5><p id="pendingRequestsCount">0</p></div>
+            </div>
