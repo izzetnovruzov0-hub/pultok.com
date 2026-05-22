@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Pultok - Video Paylaş və Qazan</title>
     
-    <!-- GOOGLE ADSENSE REKLAM STRUKTURU -->
+    <!-- GOOGLE ADSENSE -->
     <script async src="https://googlesyndication.com" crossorigin="anonymous"></script>
 
     <style>
@@ -41,7 +41,6 @@
             border-right: 1px solid #1f2937;
         }
 
-        /* REKLAM BANNER STİLLƏRİ */
         .adsense-banner { background: #111; border: 1px dashed #eab308; padding: 8px; margin: 10px; border-radius: 12px; text-align: center; min-height: 50px; z-index: 50; position: absolute; top: 0; left: 0; right: 0; }
         .ads-label { font-size: 8px; color: #eab308; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 2px; }
         .youtube-ad-box { width: 100%; height: 140px; background: #111; border-radius: 12px; overflow: hidden; margin-top: 15px; border: 1px solid #ef4444; }
@@ -101,7 +100,7 @@
         
         .wallet button { background: #10b981; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        /* GİRİŞ VƏ QEYDİYYAT PANELİ */
+        /* GİRİŞ PANELİ */
         .login {
             position: absolute;
             inset: 0;
@@ -141,7 +140,6 @@
         .auth-toggle { text-align: center; margin-top: 20px; font-size: 13px; color: #a1a1aa; }
         .auth-toggle span { color: #22d3ee; cursor: pointer; font-weight: bold; }
 
-        /* SUB-PAGES: PROFİL VƏ ADMİN */
         .sub-page { position: absolute; inset: 0; background: #000; z-index: 80; display: none; padding: 20px; flex-direction: column; overflow-y: auto; }
         .sub-page.active { display: flex; }
         .page-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; color: #22d3ee; }
@@ -156,7 +154,6 @@
         .admin-card p { font-size: 16px; font-weight: bold; color: #22d3ee; }
         .request-item { background: #111; border: 1px solid #222; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
 
-        /* MULTI-FUNCTION SECURE MODAL */
         .secure-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 1000; align-items: center; justify-content: center; padding: 20px; text-align: center; }
         .secure-content { background: #111; border: 2px solid #ef4444; padding: 25px; border-radius: 16px; max-width: 380px; }
     </style>
@@ -164,13 +161,12 @@
 
 <body>
 
-    <!-- SİTE QORUYUCU REJİM PANELİ -->
     <div id="securityAlert" class="secure-modal">
         <div class="secure-content">
             <span style="font-size: 40px;">⚠️</span>
             <h3 style="color: #ef4444; margin-top: 10px;">Sayt Mühafizəsi Aktivdir</h3>
             <p style="font-size: 13px; color: #a1a1aa; margin-top: 8px; line-height: 1.5;">
-                Şübhəli hərəkət, avtomatik bot və ya icazəsiz koda baxış (F12) cəhdi bloklandı.
+                Şübhəli hərəkət və ya icazəsiz koda baxış (F12) cəhdi bloklandı.
             </p>
             <button class="loginbtn" style="background: #ef4444; color: white; width: 100%;" onclick="location.reload()">Yenidən Yoxla</button>
         </div>
@@ -178,16 +174,17 @@
 
     <div class="container">
         
-        <!-- 0. SƏHİFƏ: REAL GİRİŞ/QEYDİYYAT PANELİ -->
+        <!-- REAL GİRİŞ/QEYDİYYAT PANELİ -->
         <div class="login" id="loginPage">
             <h1>PULTOK</h1>
             <div class="auth-subtitle" id="auth-title">Sistemə Giriş Edin</div>
 
-            <input type="text" id="auth-username" placeholder="İstifadəçi adı">
-            <input type="password" id="auth-password" placeholder="Şifrə (Min. 6 simvol)">
+            <input type="text" id="auth-username" placeholder="İstifadəçi adı yazın...">
+            <input type="password" id="auth-password" placeholder="Şifrə yazın...">
 
+            <!-- DÜZƏLİŞ: Giriş düyməsinə birbaşa klik funksiyası bağlandı (Xətanı keçmək üçün) -->
             <button class="loginbtn" id="auth-submit-btn" onclick="handleAuth()">
-                Giriş
+                Giriş Et
             </button>
             
             <div class="auth-toggle" id="auth-toggle-text">
@@ -195,17 +192,15 @@
             </div>
         </div>
 
-        <!-- 1. SƏHİFƏ: ƏSAS TIKTOK REALS AKSIYASI -->
+        <!-- ƏSAS UYGULAMA SAHƏSİ -->
         <div id="app" style="display:none; width:100%; height:100%;">
             
-            <!-- ADSENSE REKLAM YERİ -->
             <div class="adsense-banner">
                 <span class="ads-label">Google Adsense Reklamı</span>
                 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0000000000000000" data-ad-slot="0000000000" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
             </div>
 
-            <!-- İşlək Real Video Linki -->
             <video id="video" loop muted playsinline onclick="togglePlay()">
                 <source src="https://mixkit.co" type="video/mp4">
             </video>
@@ -230,11 +225,16 @@
             </div>
         </div>
 
-        <!-- 2. SƏHİFƏ: PROFİL SƏHİFƏSİ -->
+        <!-- PROFİL -->
         <div id="sub-profile" class="sub-page">
             <div class="page-title">İstifadəçi Profili</div>
             <div class="profile-header">
                 <div class="profile-avatar">👤</div>
-                <div id="profile-display-username" style="font-weight: bold; font-size: 16px;">@user</div>
+                <div id="profile-display-username" style="font-weight: bold; font-size: 16px;">@pultok_user</div>
             </div>
             <div class="stats-row">
+                <div class="stat-box"><b>12</b><span>Videolar</span></div>
+                <div class="stat-box"><b id="profileLikes">1,240</b><span>Bəyənmə</span></div>
+            </div>
+
+            <div class="youtube-ad-box">
