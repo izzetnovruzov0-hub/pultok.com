@@ -33,6 +33,7 @@
             background: #000;
         }
 
+        /* ANIMASIYALI GÖY LOQO */
         .logo-box {
             text-align: center;
             margin-bottom: 20px;
@@ -43,18 +44,24 @@
         }
         
         .pultok-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #22d3ee, #06b6d4);
-            border-radius: 20px;
+            width: 75px;
+            height: 75px;
+            background: linear-gradient(135deg, #00d2ff, #0066ff);
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            font-weight: bold;
-            color: #000;
-            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
-            margin-bottom: 15px;
+            font-size: 38px;
+            color: #fff;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.5);
+            margin-bottom: 12px;
+            animation: pulseEffect 2s infinite;
+        }
+        
+        @keyframes pulseEffect {
+            0% { transform: scale(1); box-shadow: 0 0 25px rgba(0, 210, 255, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 35px rgba(0, 210, 255, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 25px rgba(0, 210, 255, 0.5); }
         }
 
         video {
@@ -118,8 +125,9 @@
             backdrop-filter: blur(8px);
         }
         
-        .wallet button { background: #10b981; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; z-index: 40; }
+        .wallet-trigger-btn { background: #10b981; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; z-index: 40; font-size: 13px; }
 
+        /* GİRİŞ PANELİ */
         .login {
             position: absolute;
             inset: 0;
@@ -127,16 +135,17 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 30px;
+            padding: 25px;
             z-index: 100;
+            overflow-y: auto;
         }
         
-        .login h1 { text-align: center; color: #22d3ee; font-weight: 900; letter-spacing: 2px; font-size: 36px; }
-        .auth-subtitle { text-align: center; color: #a1a1aa; font-size: 13px; margin-bottom: 25px; }
+        .login h1 { text-align: center; color: #22d3ee; font-weight: 900; letter-spacing: 2px; font-size: 34px; margin-bottom: 3px; }
+        .auth-subtitle { text-align: center; color: #a1a1aa; font-size: 13px; margin-bottom: 15px; }
         
         input {
             padding: 14px;
-            margin: 10px 0;
+            margin: 6px 0;
             background: #111;
             border: 1px solid #222;
             color: white;
@@ -144,27 +153,62 @@
             outline: none;
             width: 100%;
             z-index: 110;
-            position: relative;
         }
 
-        button.loginbtn {
-            padding: 16px;
+        .universal-touch-trigger {
+            padding: 15px;
             background: #22d3ee;
-            border: none;
-            color: black;
+            color: #000;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 10px;
             width: 100%;
             font-size: 15px;
-            z-index: 110;
-            position: relative;
-            text-transform: uppercase;
+            z-index: 120;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
         }
+
+        .divider {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 12px;
+            color: #555;
+            position: relative;
+        }
+
+        /* YENİ: SOSİAL ŞƏBƏKƏ DÜYMƏLƏRİ */
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            z-index: 120;
+        }
+
+        .social-btn {
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #fff;
+            border: 1px solid #222;
+            transition: opacity 0.2s;
+        }
+        .social-btn:active { opacity: 0.7; }
         
-        .auth-toggle { text-align: center; margin-top: 25px; font-size: 13px; color: #a1a1aa; z-index: 110; position: relative; }
-        .auth-toggle span { color: #22d3ee; cursor: pointer; font-weight: bold; }
+        .btn-google { background: #fff; color: #000; border: none; }
+        .btn-tiktok { background: #010101; border: 1px solid #333; }
+        .btn-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); border: none; }
+        .btn-fb { background: #1877f2; border: none; }
+
+        .auth-toggle { text-align: center; margin-top: 20px; font-size: 13px; color: #a1a1aa; z-index: 110; }
+        .auth-toggle span { color: #22d3ee; cursor: pointer; font-weight: bold; padding: 5px; }
 
         .sub-page { position: absolute; inset: 0; background: #000; z-index: 80; display: none; padding: 20px; flex-direction: column; overflow-y: auto; }
         .sub-page.active { display: flex; }
@@ -177,7 +221,6 @@
         
         .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .admin-card { background: #111; border: 1px solid #222; padding: 12px; border-radius: 10px; text-align: center; }
-        .admin-card h5 { font-size: 11px; color: #a1a1aa; margin-bottom: 2px; }
         .admin-card p { font-size: 16px; font-weight: bold; color: #22d3ee; }
     </style>
 </head>
@@ -186,10 +229,10 @@
 
     <div class="container">
         
-        <!-- GİRİŞ SƏHİFƏSİ PANELİ -->
+        <!-- GİRİŞ VƏ SOSİAL ŞƏBƏKƏ PANELİ -->
         <div class="login" id="loginPage">
             <div class="logo-box">
-                <div class="pultok-icon">📲</div>
+                <div class="pultok-icon">🕹️</div>
                 <h1>PULTOK</h1>
             </div>
             <div class="auth-subtitle" id="auth-title">Sistemə Giriş Edin</div>
@@ -197,17 +240,34 @@
             <input type="text" id="auth-username" placeholder="İstifadəçi adı...">
             <input type="password" id="auth-password" placeholder="Şifrə...">
 
-            <!-- SPESİFİK DÜZƏLİŞ: İndi düyməyə klik edən kimi dərhal tətbiqi açır, heç bir şərt gözləmir -->
-            <button class="loginbtn" id="auth-submit-btn" onclick="handleAuth()">
-                Giriş Və Ya Qeydiyyat
-            </button>
+            <div class="universal-touch-trigger" id="auth-submit-btn" onclick="handleAuth()">
+                Giriş və ya Qeydiyyat
+            </div>
+
+            <div class="divider">və ya sürətli qoşul</div>
+
+            <!-- SÜRATLİ SOSİAL GİRİŞ DÜYMƏLƏRİ (Bütün Blokları Qırır) -->
+            <div class="social-grid">
+                <div class="social-btn btn-google" onclick="socialLogin('Google_User')">
+                    🌐 Google
+                </div>
+                <div class="social-btn btn-tiktok" onclick="socialLogin('TikTok_User')">
+                    🎵 TikTok
+                </div>
+                <div class="social-btn btn-insta" onclick="socialLogin('Insta_User')">
+                    📸 Instagram
+                </div>
+                <div class="social-btn btn-fb" onclick="socialLogin('FB_User')">
+                    🔵 Facebook
+                </div>
+            </div>
             
             <div class="auth-toggle" id="auth-toggle-text">
                 Hesabınız yoxdur? <span onclick="toggleAuthMode(true)">Qeydiyyatdan keç</span>
             </div>
         </div>
 
-        <!-- ƏSAS VİDEO REALS SAHƏSİ -->
+        <!-- ƏSAS VİDEO TIKTOK FEED SƏHİFƏSİ -->
         <div id="app" style="display:none; width:100%; height:100%;">
             <video id="video" loop muted playsinline onclick="togglePlay()">
                 <source src="https://mixkit.co" type="video/mp4">
@@ -225,48 +285,3 @@
             </div>
 
             <div class="wallet">
-                <div>
-                    <small style="color: #a1a1aa; font-size: 11px;">Sizin Balansınız</small>
-                    <h2 id="balance" style="color: #34d399;">0.00 ₼</h2>
-                </div>
-                <button onclick="withdraw()">Çıxar</button>
-            </div>
-        </div>
-
-        <!-- PROFİL -->
-        <div id="sub-profile" class="sub-page">
-            <div class="page-title">İstifadəçi Profili</div>
-            <div class="profile-header">
-                <div class="profile-avatar">👤</div>
-                <div id="profile-display-username" style="font-weight: bold; font-size: 16px;">@user</div>
-            </div>
-            <div class="stats-row">
-                <div class="stat-box"><b>12</b><span>Videolar</span></div>
-                <div class="stat-box"><b id="profileLikes">1,240</b><span>Bəyənmə</span></div>
-            </div>
-
-            <button class="loginbtn" style="background: #222; color: white;" onclick="navigateTo('admin')">⚙️ Admin Paneli</button>
-            <button class="loginbtn" style="background: #333; color: white;" onclick="closeSubPage()">⬅️ Geriyə Qayıt</button>
-            <button class="loginbtn" style="background: #ef4444; color: white;" onclick="handleLogout()">🚪 Çıxış Et</button>
-        </div>
-
-        <!-- ADMİN -->
-        <div id="sub-admin" class="sub-page">
-            <div class="page-title">Admin İdarəetmə</div>
-            <div class="admin-grid">
-                <div class="admin-card"><h5>Toplam İstifadəçi</h5><p>1,420</p></div>
-                <div class="admin-card"><h5>Gözləyən Çıxarış</h5><p>0</p></div>
-            </div>
-            <button class="loginbtn" style="background: #333; color: white;" onclick="navigateTo('profile')">⬅️ Profilə Keç</button>
-        </div>
-    </div>
-
-    <script>
-        let isRegisterMode = false;
-        let liked = false;
-        let balance = 0.00;
-        let loggedInUser = "istifadəçi";
-
-        function toggleAuthMode(reg) {
-            isRegisterMode = reg;
-            document.getElementById('auth-title').innerText = reg ? "Yeni Hesab Yarat" : "Sistemə Giriş Edin";
