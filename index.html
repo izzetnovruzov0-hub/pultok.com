@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Pultok - Video Paylaş və Qazan</title>
     <style>
-        /* CSS QORUYUCU DÜZƏLDİLDİ: Düymələrin donmasının qarşısını almaq üçün pointer-events silindi */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -34,7 +33,6 @@
             background: #000;
         }
 
-        /* YENİ: SİMGE LOQO DIZAYNI VƏ ANİMASİYASI */
         .logo-box {
             text-align: center;
             margin-bottom: 20px;
@@ -43,6 +41,7 @@
             align-items: center;
             justify-content: center;
         }
+        
         .pultok-icon {
             width: 70px;
             height: 70px;
@@ -56,17 +55,7 @@
             color: #000;
             box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
             margin-bottom: 15px;
-            animation: pulse 2s infinite;
         }
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 20px rgba(34, 211, 238, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(34, 211, 238, 0.7); }
-            100% { transform: scale(1); box-shadow: 0 0 20px rgba(34, 211, 238, 0.4); }
-        }
-
-        .adsense-banner { background: #111; border: 1px dashed #eab308; padding: 8px; margin: 10px; border-radius: 12px; text-align: center; min-height: 50px; z-index: 50; position: absolute; top: 0; left: 0; right: 0; }
-        .ads-label { font-size: 8px; color: #eab308; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 2px; }
-        .youtube-ad-box { width: 100%; height: 140px; background: #111; border-radius: 12px; overflow: hidden; margin-top: 15px; border: 1px solid #ef4444; }
 
         video {
             width: 100%;
@@ -131,7 +120,6 @@
         
         .wallet button { background: #10b981; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; z-index: 40; }
 
-        /* GİRİŞ EKRANI SENSORLARI DÜZƏLDİLDİ */
         .login {
             position: absolute;
             inset: 0;
@@ -142,6 +130,7 @@
             padding: 30px;
             z-index: 100;
         }
+        
         .login h1 { text-align: center; color: #22d3ee; font-weight: 900; letter-spacing: 2px; font-size: 36px; }
         .auth-subtitle { text-align: center; color: #a1a1aa; font-size: 13px; margin-bottom: 25px; }
         
@@ -157,7 +146,6 @@
             z-index: 110;
             position: relative;
         }
-        input:focus { border-color: #22d3ee; }
 
         button.loginbtn {
             padding: 16px;
@@ -173,14 +161,15 @@
             z-index: 110;
             position: relative;
             text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(34, 211, 238, 0.2);
         }
+        
         .auth-toggle { text-align: center; margin-top: 25px; font-size: 13px; color: #a1a1aa; z-index: 110; position: relative; }
         .auth-toggle span { color: #22d3ee; cursor: pointer; font-weight: bold; }
 
         .sub-page { position: absolute; inset: 0; background: #000; z-index: 80; display: none; padding: 20px; flex-direction: column; overflow-y: auto; }
         .sub-page.active { display: flex; }
         .page-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; color: #22d3ee; }
+        
         .profile-header { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
         .profile-avatar { width: 70px; height: 70px; background: #222; border-radius: 50%; border: 2px solid #22d3ee; display: flex; align-items: center; justify-content: center; font-size: 30px; }
         .stats-row { display: flex; justify-content: center; gap: 35px; margin-bottom: 20px; text-align: center; }
@@ -190,7 +179,6 @@
         .admin-card { background: #111; border: 1px solid #222; padding: 12px; border-radius: 10px; text-align: center; }
         .admin-card h5 { font-size: 11px; color: #a1a1aa; margin-bottom: 2px; }
         .admin-card p { font-size: 16px; font-weight: bold; color: #22d3ee; }
-        .request-item { background: #111; border: 1px solid #222; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
     </style>
 </head>
 
@@ -198,10 +186,9 @@
 
     <div class="container">
         
-        <!-- 0. SƏHİFƏ: GİRİŞ PANELİ VƏ LOGO SİMGƏSİ -->
+        <!-- GİRİŞ SƏHİFƏSİ PANELİ -->
         <div class="login" id="loginPage">
             <div class="logo-box">
-                <!-- Yeni Göy Rəngli Pult Simgəsi -->
                 <div class="pultok-icon">📲</div>
                 <h1>PULTOK</h1>
             </div>
@@ -210,6 +197,7 @@
             <input type="text" id="auth-username" placeholder="İstifadəçi adı...">
             <input type="password" id="auth-password" placeholder="Şifrə...">
 
+            <!-- SPESİFİK DÜZƏLİŞ: İndi düyməyə klik edən kimi dərhal tətbiqi açır, heç bir şərt gözləmir -->
             <button class="loginbtn" id="auth-submit-btn" onclick="handleAuth()">
                 Giriş Və Ya Qeydiyyat
             </button>
@@ -219,13 +207,8 @@
             </div>
         </div>
 
-        <!-- 1. SƏHİFƏ: ƏSAS VİDEO REALS AXINI -->
+        <!-- ƏSAS VİDEO REALS SAHƏSİ -->
         <div id="app" style="display:none; width:100%; height:100%;">
-            
-            <div class="adsense-banner">
-                <span class="ads-label">Google Adsense Reklamı</span>
-            </div>
-
             <video id="video" loop muted playsinline onclick="togglePlay()">
                 <source src="https://mixkit.co" type="video/mp4">
             </video>
@@ -250,7 +233,7 @@
             </div>
         </div>
 
-        <!-- 2. SƏHİFƏ: PROFİL SƏHİFƏSİ -->
+        <!-- PROFİL -->
         <div id="sub-profile" class="sub-page">
             <div class="page-title">İstifadəçi Profili</div>
             <div class="profile-header">
@@ -258,3 +241,32 @@
                 <div id="profile-display-username" style="font-weight: bold; font-size: 16px;">@user</div>
             </div>
             <div class="stats-row">
+                <div class="stat-box"><b>12</b><span>Videolar</span></div>
+                <div class="stat-box"><b id="profileLikes">1,240</b><span>Bəyənmə</span></div>
+            </div>
+
+            <button class="loginbtn" style="background: #222; color: white;" onclick="navigateTo('admin')">⚙️ Admin Paneli</button>
+            <button class="loginbtn" style="background: #333; color: white;" onclick="closeSubPage()">⬅️ Geriyə Qayıt</button>
+            <button class="loginbtn" style="background: #ef4444; color: white;" onclick="handleLogout()">🚪 Çıxış Et</button>
+        </div>
+
+        <!-- ADMİN -->
+        <div id="sub-admin" class="sub-page">
+            <div class="page-title">Admin İdarəetmə</div>
+            <div class="admin-grid">
+                <div class="admin-card"><h5>Toplam İstifadəçi</h5><p>1,420</p></div>
+                <div class="admin-card"><h5>Gözləyən Çıxarış</h5><p>0</p></div>
+            </div>
+            <button class="loginbtn" style="background: #333; color: white;" onclick="navigateTo('profile')">⬅️ Profilə Keç</button>
+        </div>
+    </div>
+
+    <script>
+        let isRegisterMode = false;
+        let liked = false;
+        let balance = 0.00;
+        let loggedInUser = "istifadəçi";
+
+        function toggleAuthMode(reg) {
+            isRegisterMode = reg;
+            document.getElementById('auth-title').innerText = reg ? "Yeni Hesab Yarat" : "Sistemə Giriş Edin";
